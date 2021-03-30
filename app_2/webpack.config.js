@@ -1,0 +1,89 @@
+const { VueLoaderPlugin } = require("vue-loader");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const autoprefixer = require("autoprefixer");
+const path = require("path");
+
+const { ModuleFederationPlugin } = require("webpack").container;
+
+module.exports = {
+  entry: {
+    main: "./src/main.js",
+  },
+  output: {
+    filename: "[name].[contenthash:8].js",
+    path: path.resolve(__dirname, "dist"),
+    chunkFilename: "[name].[contenthash:8].js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
+      },
+      {
+        test: /\.s?css$/,
+        use: [
+          "style-loader",
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [autoprefixer()],
+            },
+          },
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
+        loader: "file-loader",
+      },
+      {
+        test: /\.(png|jpe?g|gif|webm|mp4|svg)$/,
+        loader: "file-loader",
+        options: {
+          name: "[name][contenthash:8].[ext]",
+          outputPath: "assets/img",
+          esModule: false,
+        },
+      },
+    ],
+  },
+  plugins: [
+    new VueLoaderPlugin(),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash:8].css",
+      chunkFilename: "[name].[contenthash:8].css",
+    }),
+    new ModuleFederationPlugin({
+      name: "app2",
+      // library: { type: "var", name: "app2" },
+      filename: "remoteEntry.js",
+      exposes: {},
+      remotes: { "commons": "commons@http://localhost:3000/remoteEntry.js" },
+      shared: ["vue", "vue-router", "vue-loader", "vue-template-compiler"],
+    }),
+    new htmlWebpackPlugin({
+      template: path.resolve(__dirname, "public", "index.html"),
+      favicon: "./public/favicon.ico",
+    }),
+  ],
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.runtime.esm.js",
+    },
+    extensions: ["*", ".js", ".vue", ".json"],
+  },
+
+};
