@@ -38,7 +38,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--textColor);
+  color: white;
 
   .logo {
     width: 20%;
@@ -50,7 +50,7 @@ export default {
 
   a {
     font-weight: 500;
-    color: var(--textColor);
+    color: white;
     margin: 0 5px;
   }
 
