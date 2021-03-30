@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "lerna run start",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "clean": "npx lerna clean -y"
   }
 }
