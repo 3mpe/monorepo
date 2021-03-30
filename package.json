@@ -6,6 +6,7 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
-    "start": "lerna run start"
+    "start": "lerna run start",
+    "test": "lerna run test"
   }
 }
