@@ -2,27 +2,18 @@ const { VueLoaderPlugin } = require("vue-loader");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-
-const { ModuleFederationPlugin } = require("webpack").container;
-
-
 const autoprefixer = require("autoprefixer");
 const path = require("path");
+const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = {
   entry: {
     main: "./src/main.js",
   },
-  // devServer: {
-  //   contentBase: path.join(__dirname, "dist"),
-  //   port: 3000,
-  // },
   output: {
     filename: "[name].[contenthash:8].js",
     path: path.resolve(__dirname, "dist"),
-    chunkFilename: "[name][contenthash:8].js",
-    umdNamedDefine: true,
-    publicPath: "http://localhost:3000/",
+    chunkFilename: "[name].[contenthash:8].js",
   },
   module: {
     rules: [
@@ -72,17 +63,14 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash:8].css",
-      chunkFilename: "[name][contenthash:8].css",
+      chunkFilename: "[name].[contenthash:8].css",
     }),
     new ModuleFederationPlugin({
-      name: "commons",
-      library: { type: "var", name: "commons" },
+      name: "app3",
+      // library: { type: "var", name: "app2" },
       filename: "remoteEntry.js",
-      remotes: {},
-      exposes: {
-        // expose each component
-        "./Header": "./src/components/Header.vue",
-      },
+      exposes: {},
+      remotes: { "commons": "commons@http://localhost:3000/remoteEntry.js" },
       shared: ["vue", "vue-router", "vue-loader", "vue-template-compiler"],
     }),
     new htmlWebpackPlugin({

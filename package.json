@@ -8,6 +8,8 @@
   "scripts": {
     "start": "lerna run start",
     "test": "lerna run test",
-    "clean": "npx lerna clean -y"
+    "clean": "npx lerna clean -y",
+    "bootstrap": "lerna bootstrap --hoist",
+    "rebuild": "npm run bootstrap --hoist && npm run clean && npm run start"
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header />
+    <Header/>
     <div class="nav">
       <router-link to="/">Home</router-link>|<router-link to="/about"
         >About</router-link
@@ -11,11 +11,12 @@
 </template>
 
 <script>
-import Header from "commons/Header"
-export default {
-  components: { Header }
-}
+  import Header from "commons/Header"
+  export default {
+    components: { Header }
+  }
 </script>
+
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
@@ -31,7 +32,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
+  color: var(--textColor);
 
   .logo {
     width: 20%;
@@ -43,7 +44,7 @@ export default {
 
   a {
     font-weight: 500;
-    color: white;
+    color: var(--textColor);
     margin: 0 5px;
   }
 

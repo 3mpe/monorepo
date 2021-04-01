@@ -85,5 +85,21 @@ module.exports = {
     },
     extensions: ["*", ".js", ".vue", ".json"],
   },
-
+  /*optimization: {
+    moduleIds: "hashed",
+    runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          priority: -10,
+          chunks: "all",
+        },
+      },
+    },
+  },*/
+  devServer: {
+    historyApiFallback: true,
+  },
 };
